@@ -11,3 +11,6 @@ wheels/
 
 # Generated outputs
 salida/
+
+# Windows metadata sidecar files
+*:Zone.Identifier

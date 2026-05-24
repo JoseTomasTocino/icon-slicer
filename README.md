@@ -1,5 +1,7 @@
 # icon-slicer
 
+![Resumen del proyecto](summary-image.png)
+
 Script para extraer iconos desde una imagen compuesta y guardarlos como PNG con transparencia.
 
 ## Requisitos
