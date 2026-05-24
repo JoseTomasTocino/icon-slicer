@@ -1,0 +1,10 @@
+[project]
+name = "icon-slicer"
+version = "0.1.0"
+description = "Extract badges and icons with transparent backgrounds from composite images"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.4.6",
+    "opencv-python>=4.13.0.92",
+]
