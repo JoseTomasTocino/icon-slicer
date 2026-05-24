@@ -33,19 +33,19 @@ source .venv/bin/activate
 También puedes ejecutar el script directamente con `uv` sin activar el entorno:
 
 ```bash
-uv run python extraer_badges.py image_sources/b1.png salida --white-threshold 245 --min-area 500
+uv run python icon_slicer.py image_sources/b1.png salida --white-threshold 245 --min-area 500
 ```
 
 ## Uso
 
 ```bash
-python extraer_badges.py ENTRADA SALIDA_DIR [--white-threshold N] [--min-area N] [--save-debug]
+python icon_slicer.py ENTRADA SALIDA_DIR [--white-threshold N] [--min-area N] [--save-debug]
 ```
 
 Ejemplo:
 
 ```bash
-python extraer_badges.py image_sources/b1.png salida --white-threshold 245 --min-area 500
+python icon_slicer.py image_sources/b1.png salida --white-threshold 245 --min-area 500
 ```
 
 ## Cómo funciona
@@ -94,7 +94,7 @@ Archivos de debug generados:
 Ejemplo:
 
 ```bash
-python extraer_badges.py image_sources/b1.png salida --white-threshold 245 --min-area 500 --save-debug
+python icon_slicer.py image_sources/b1.png salida --white-threshold 245 --min-area 500 --save-debug
 ```
 
 ## Salida

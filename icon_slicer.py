@@ -63,6 +63,7 @@ def parse_args(argv):
 
     return args
 
+
 args = parse_args(sys.argv[1:])
 entrada = args.entrada
 salida_dir = args.salida_dir
