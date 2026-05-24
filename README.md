@@ -1,6 +1,6 @@
 # icon-slicer
 
-Script para extraer badges o iconos desde una imagen compuesta y guardarlos como PNG con transparencia.
+Script para extraer iconos desde una imagen compuesta y guardarlos como PNG con transparencia.
 
 ## Requisitos
 
@@ -57,7 +57,7 @@ Después:
 - limpia la máscara con operaciones morfológicas,
 - detecta componentes conectados,
 - descarta componentes demasiado pequeños,
-- exporta cada componente válido como `badge_XX.png` con canal alpha.
+- exporta cada componente válido como `icon_XX.png` con canal alpha.
 
 ## Parámetros
 
@@ -71,7 +71,7 @@ Umbral para considerar un píxel como casi blanco.
 
 ### `--min-area`
 
-Área mínima en píxeles para aceptar un componente como badge.
+Área mínima en píxeles para aceptar un componente como icono.
 
 - Valor por defecto: `500`
 - Si lo subes, se descarta más ruido.
@@ -99,11 +99,11 @@ python icon_slicer.py image_sources/b1.png salida --white-threshold 245 --min-ar
 
 ## Salida
 
-Los badges se guardan como:
+Los iconos se guardan como:
 
-- `badge_01.png`
-- `badge_02.png`
-- `badge_03.png`
+- `icon_01.png`
+- `icon_02.png`
+- `icon_03.png`
 
 Si esos nombres ya existen, el script no sobreescribe archivos anteriores: busca automáticamente el siguiente índice libre.
 
@@ -115,5 +115,5 @@ El script emite logs paso a paso para facilitar el diagnóstico:
 - creación de máscara,
 - limpieza morfológica,
 - detección de componentes,
-- exportación de badges,
+- exportación de iconos,
 - saltos de nombres ya ocupados.

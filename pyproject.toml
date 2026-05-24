@@ -1,7 +1,7 @@
 [project]
 name = "icon-slicer"
 version = "0.1.0"
-description = "Extract badges and icons with transparent backgrounds from composite images"
+description = "Extract icons with transparent backgrounds from composite images"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

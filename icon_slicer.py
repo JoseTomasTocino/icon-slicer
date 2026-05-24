@@ -21,10 +21,10 @@ def guardar_debug_imagen(ruta, imagen, descripcion):
         logger.warning("No se pudo guardar debug (%s): %s", descripcion, ruta)
 
 
-def siguiente_badge_disponible(salida_dir, indice_inicio=1):
+def siguiente_icono_disponible(salida_dir, indice_inicio=1):
     indice = indice_inicio
     while True:
-        ruta = os.path.join(salida_dir, f"badge_{indice:02d}.png")
+        ruta = os.path.join(salida_dir, f"icon_{indice:02d}.png")
         if not os.path.exists(ruta):
             return ruta, indice
         logger.info("Salida existente detectada, se omite: %s", ruta)
@@ -33,7 +33,7 @@ def siguiente_badge_disponible(salida_dir, indice_inicio=1):
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(
-        description="Extrae badges con transparencia a partir de una imagen."
+        description="Extrae iconos con transparencia a partir de una imagen."
     )
     parser.add_argument("entrada", help="Ruta de la imagen de entrada")
     parser.add_argument("salida_dir", help="Carpeta donde guardar resultados")
@@ -52,7 +52,7 @@ def parse_args(argv):
         "--min-area",
         type=int,
         default=500,
-        help="Área mínima en píxeles para aceptar un componente como badge. Por defecto: 500",
+        help="Área mínima en píxeles para aceptar un componente como icono. Por defecto: 500",
     )
     args = parser.parse_args(argv)
 
@@ -220,9 +220,9 @@ if not componentes:
     )
 
 # --------------------------------------------------
-# 4) Extraer cada badge con fondo transparente
+# 4) Extraer cada icono con fondo transparente
 # --------------------------------------------------
-logger.info("Paso 4/4: iniciando exportación de badges")
+logger.info("Paso 4/4: iniciando exportación de iconos")
 indice_salida = 1
 for idx, (x, y, w, h, area, label_id) in enumerate(componentes, start=1):
     padding = 25
@@ -232,7 +232,7 @@ for idx, (x, y, w, h, area, label_id) in enumerate(componentes, start=1):
     y2 = min(y + h + padding, img.shape[0])
 
     logger.info(
-        "Badge %02d: bbox=(x=%d,y=%d,w=%d,h=%d), area=%d, recorte=(%d,%d)-(%d,%d)",
+        "Icon %02d: bbox=(x=%d,y=%d,w=%d,h=%d), area=%d, recorte=(%d,%d)-(%d,%d)",
         idx,
         x,
         y,
@@ -259,7 +259,7 @@ for idx, (x, y, w, h, area, label_id) in enumerate(componentes, start=1):
     # Construir RGBA
     rgba = np.dstack([crop_rgb, alpha])
 
-    salida, indice_usado = siguiente_badge_disponible(salida_dir, indice_salida)
+    salida, indice_usado = siguiente_icono_disponible(salida_dir, indice_salida)
     ok = cv2.imwrite(salida, cv2.cvtColor(rgba, cv2.COLOR_RGBA2BGRA))
     if ok:
         logger.info("Guardado componente %02d en: %s", idx, salida)
@@ -267,4 +267,4 @@ for idx, (x, y, w, h, area, label_id) in enumerate(componentes, start=1):
         logger.warning("No se pudo guardar componente %02d en: %s", idx, salida)
     indice_salida = indice_usado + 1
 
-logger.info("Terminado. Se generaron %d badges.", len(componentes))
+logger.info("Terminado. Se generaron %d iconos.", len(componentes))
