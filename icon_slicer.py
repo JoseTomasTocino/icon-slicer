@@ -21,10 +21,10 @@ def guardar_debug_imagen(ruta, imagen, descripcion):
         logger.warning("No se pudo guardar debug (%s): %s", descripcion, ruta)
 
 
-def siguiente_icono_disponible(salida_dir, indice_inicio=1):
+def siguiente_icono_disponible(salida_dir, prefix="icon", indice_inicio=1):
     indice = indice_inicio
     while True:
-        ruta = os.path.join(salida_dir, f"icon_{indice:02d}.png")
+        ruta = os.path.join(salida_dir, f"{prefix}_{indice:02d}.png")
         if not os.path.exists(ruta):
             return ruta, indice
         logger.info("Salida existente detectada, se omite: %s", ruta)
@@ -37,6 +37,13 @@ def parse_args(argv):
     )
     parser.add_argument("entrada", help="Ruta de la imagen de entrada")
     parser.add_argument("salida_dir", help="Carpeta donde guardar resultados")
+    parser.add_argument(
+        "--prefix",
+        "--prefijo",
+        dest="prefix",
+        default="icon",
+        help="Text used as the filename prefix for generated files. Default: icon",
+    )
     parser.add_argument(
         "--white-threshold",
         type=int,
@@ -60,6 +67,9 @@ def parse_args(argv):
         parser.error("--white-threshold debe estar entre 0 y 255")
     if args.min_area < 1:
         parser.error("--min-area debe ser mayor que 0")
+    args.prefix = args.prefix.strip()
+    if not args.prefix:
+        parser.error("--prefix cannot be empty")
 
     return args
 
@@ -70,10 +80,12 @@ salida_dir = args.salida_dir
 white_threshold = args.white_threshold
 save_debug = args.save_debug
 min_area = args.min_area
+prefix = args.prefix
 os.makedirs(salida_dir, exist_ok=True)
 logger.info("Inicio de ejecución")
 logger.info("Imagen de entrada: %s", entrada)
 logger.info("Carpeta de salida: %s", salida_dir)
+logger.info("prefix: %s", prefix)
 logger.info("white_threshold: %d", white_threshold)
 logger.info("save_debug: %s", save_debug)
 logger.info("min_area: %d", min_area)
@@ -259,7 +271,7 @@ for idx, (x, y, w, h, area, label_id) in enumerate(componentes, start=1):
     # Construir RGBA
     rgba = np.dstack([crop_rgb, alpha])
 
-    salida, indice_usado = siguiente_icono_disponible(salida_dir, indice_salida)
+    salida, indice_usado = siguiente_icono_disponible(salida_dir, prefix, indice_salida)
     ok = cv2.imwrite(salida, cv2.cvtColor(rgba, cv2.COLOR_RGBA2BGRA))
     if ok:
         logger.info("Guardado componente %02d en: %s", idx, salida)

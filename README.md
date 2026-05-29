@@ -41,13 +41,13 @@ uv run python icon_slicer.py image_sources/b1.png salida --white-threshold 245 -
 ## Uso
 
 ```bash
-python icon_slicer.py ENTRADA SALIDA_DIR [--white-threshold N] [--min-area N] [--save-debug]
+python icon_slicer.py ENTRADA SALIDA_DIR [--prefix TEXT] [--white-threshold N] [--min-area N] [--save-debug]
 ```
 
 Ejemplo:
 
 ```bash
-python icon_slicer.py image_sources/b1.png salida --white-threshold 245 --min-area 500
+python icon_slicer.py image_sources/b1.png salida --prefix badge --white-threshold 245 --min-area 500
 ```
 
 ## Cómo funciona
@@ -59,7 +59,7 @@ Después:
 - limpia la máscara con operaciones morfológicas,
 - detecta componentes conectados,
 - descarta componentes demasiado pequeños,
-- exporta cada componente válido como `icon_XX.png` con canal alpha.
+- exporta cada componente válido como `<prefix>_XX.png` con canal alpha.
 
 ## Parámetros
 
@@ -96,18 +96,18 @@ Archivos de debug generados:
 Ejemplo:
 
 ```bash
-python icon_slicer.py image_sources/b1.png salida --white-threshold 245 --min-area 500 --save-debug
+python icon_slicer.py image_sources/b1.png salida --prefix badge --white-threshold 245 --min-area 500 --save-debug
 ```
 
 ## Salida
 
 Los iconos se guardan como:
 
-- `icon_01.png`
-- `icon_02.png`
-- `icon_03.png`
+- `<prefix>_01.png`
+- `<prefix>_02.png`
+- `<prefix>_03.png`
 
-Si esos nombres ya existen, el script no sobreescribe archivos anteriores: busca automáticamente el siguiente índice libre.
+Si esos nombres ya existen, el script no sobreescribe archivos anteriores: busca automáticamente el siguiente índice libre para ese prefix.
 
 ## Logging
 
