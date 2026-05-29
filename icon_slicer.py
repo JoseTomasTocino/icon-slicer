@@ -271,6 +271,18 @@ for idx, (x, y, w, h, area, label_id) in enumerate(componentes, start=1):
     # Construir RGBA
     rgba = np.dstack([crop_rgb, alpha])
 
+    # Trim final: recortar al bbox mínimo con alpha no transparente.
+    ys, xs = np.where(alpha > 0)
+    if ys.size and xs.size:
+        ay1, ay2 = ys.min(), ys.max() + 1
+        ax1, ax2 = xs.min(), xs.max() + 1
+        rgba = rgba[ay1:ay2, ax1:ax2]
+    else:
+        logger.warning(
+            "Componente %02d sin pixeles visibles tras alpha; se mantiene recorte original.",
+            idx,
+        )
+
     salida, indice_usado = siguiente_icono_disponible(salida_dir, prefix, indice_salida)
     ok = cv2.imwrite(salida, cv2.cvtColor(rgba, cv2.COLOR_RGBA2BGRA))
     if ok:
